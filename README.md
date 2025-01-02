@@ -6,6 +6,16 @@ status: Idea
 
 Responsible for coordinating the team.
 
+## Web
+
+in .koksmat/web run
+
+### Initialize
+
+```
+npx shadcn init
+```
+
 Tasks include
 
 ## Issuing, monitoring, renewing and revoking

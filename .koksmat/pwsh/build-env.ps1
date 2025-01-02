@@ -20,6 +20,8 @@ $dollar = '$'  # Escape the dollar sign to avoid variable expansion in the scrip
 
 # STEP 1: Find a list of .env files starting from current directory going upwards
 $envFiles = New-Object System.Collections.Generic.List[string]
+
+
 $currentDir = (Get-Location).ProviderPath
 
 while ($true) {

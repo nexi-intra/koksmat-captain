@@ -1,3 +1,4 @@
+# https://learn.microsoft.com/en-us/powershell/exchange/app-only-auth-powershell-v2?view=exchange-ps
 # Define the module name
 $moduleName = 'ExchangeOnlineManagement'
 
