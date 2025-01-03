@@ -25,6 +25,9 @@ function New-ExchangeOnlineSelfSignedCert {
     [Parameter(Mandatory = $true, HelpMessage = "The subject name for the certificate (e.g., 'CN=User@example.com').")]
     [string]$SubjectName,
 
+    [Parameter(Mandatory = $true, HelpMessage = "The base file name for the certificate files.")]
+    [string]$BaseFileName,
+
     [Parameter(Mandatory = $false, HelpMessage = "Number of years the certificate is valid. Default is 2 years.")]
     [int]$CertValidityYears = 2,
 
@@ -42,8 +45,6 @@ function New-ExchangeOnlineSelfSignedCert {
     }
 
 
-    # Sanitize the SubjectName to create valid file names
-    $baseFileName = $SubjectName -replace '[^a-zA-Z0-9.-]', '_' # Replace invalid characters with underscores
 
     $privateKeyPath = Join-Path -Path $scriptDirectory -ChildPath "$baseFileName.key"
     $certPath = Join-Path -Path $scriptDirectory -ChildPath "$baseFileName.crt"
@@ -123,9 +124,20 @@ extendedKeyUsage = clientAuth
   }
 }
 
-$certDir = join-path (SetKoksmatWorkdir) "certs"
-if (-not (Test-Path $certDir)) {
-  New-Item -Path $certDir -ItemType Directory | Out-Null
+function New-Cert() {
+  param(
+    [Parameter(Mandatory = $true, HelpMessage = "The subject name for the certificate (e.g., cn=xx@domainname.com")]
+
+    [string]$SubjectName,
+    [Parameter(Mandatory = $true, HelpMessage = "The base file name for the certificate files.")]
+    [string]$BaseFileName
+
+  )
+  $certDir = join-path (SetKoksmatWorkdir) "certs"
+  if (-not (Test-Path $certDir)) {
+    New-Item -Path $certDir -ItemType Directory | Out-Null
+  }
+  # Execute the function with the desired SubjectName and validity period
+  New-ExchangeOnlineSelfSignedCert -SubjectName $SubjectName -CertValidityYears 1 -scriptDirectory $certDir -BaseFileName $BaseFileName
+  $env:CERTDIR = $certDir
 }
-# Execute the function with the desired SubjectName and validity period
-New-ExchangeOnlineSelfSignedCert -SubjectName "exchange" -CertValidityYears 2 -scriptDirectory $certDir 

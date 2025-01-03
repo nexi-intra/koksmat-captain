@@ -25,11 +25,17 @@ function FindSiteIdByUrl($token, $siteUrl) {
 
     return  $site.id
 }
-function GraphAPI($token, $method, $url, $body) {
-    $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-    $headers.Add("Content-Type", "application/json")
-    $headers.Add("Accept", "application/json")
-    $headers.Add("Authorization", "Bearer $token" )
+function GraphAPI($token, $method, $url, $body, $headers) {
+    if ($null -eq $headers) {
+        $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+        $headers.Add("Content-Type", "application/json")
+        $headers.Add("Accept", "application/json")
+        $headers.Add("Authorization", "Bearer $token" )
+    }
+    else {
+        $headers.Add("Accept", "application/json")
+        $headers.Add("Authorization", "Bearer $token" )
+    }
     
     
     $errorCount = $error.Count
@@ -41,6 +47,7 @@ function GraphAPI($token, $method, $url, $body) {
     return $result
 
 }
+
 <#
 .description
 Read from Graph and follow @odata.nextLink
