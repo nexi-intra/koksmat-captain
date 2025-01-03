@@ -28,5 +28,5 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Update Metadata
-        run: pwsh ./newschannel-groups-provision/run.ps1
+        run: pwsh ./share-exchange-connectionstring/run.ps1
         shell: pwsh
