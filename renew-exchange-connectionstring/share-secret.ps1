@@ -5,6 +5,8 @@ $root = [System.IO.Path]::GetFullPath(( join-path $PSScriptRoot ..))
 
 . "$root/.koksmat/pwsh/check-env.ps1" "GRAPH_APPID", "GRAPH_APPSECRET", "GRAPH_APPDOMAIN", "OWNER_UPN", "SENDER_UPN", "TARGET_APPID", "TARGET_ORGANIZATION", "TARGET_DOMAIN"
 . "$root/.koksmat/pwsh/connectors/graph/connect.ps1"
+$appInfo = az ad app show --id $env:TARGET_APPID --output json | ConvertFrom-Json
+
 
 $uploadedFile = GraphAPI `
   -token $env:GRAPH_ACCESSTOKEN `
@@ -41,7 +43,7 @@ GraphAPI `
   -body @"
 {
   "message": {
-    "subject": "A new secret is available",
+    "subject": "A new secret is available for app $($appInfo.displayName)",
     "body": {
       "contentType": "Text",
       "content": "$message"

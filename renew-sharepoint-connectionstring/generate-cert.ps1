@@ -10,14 +10,14 @@ function New-SharepointOnlineSelfSignedCert {
   .PARAMETER SubjectName
       The subject name for the certificate (e.g., "CN=User@example.com").
 
-  .PARAMETER CertValidityYears
+  .PARAMETER CertValidityDays
       (Optional) The number of years the certificate will be valid. Default is 2 years.
 
   .EXAMPLE
       New-SharepointOnlineSelfSignedCert -SubjectName "CN=User@example.com"
 
   .EXAMPLE
-      New-SharepointOnlineSelfSignedCert -SubjectName "CN=User@example.com" -CertValidityYears 3
+      New-SharepointOnlineSelfSignedCert -SubjectName "CN=User@example.com" -CertValidityDays 3
   #>
 
   [CmdletBinding()]
@@ -28,8 +28,8 @@ function New-SharepointOnlineSelfSignedCert {
     [Parameter(Mandatory = $true, HelpMessage = "The base file name for the certificate files.")]
     [string]$BaseFileName,
 
-    [Parameter(Mandatory = $false, HelpMessage = "Number of years the certificate is valid. Default is 2 years.")]
-    [int]$CertValidityYears = 2,
+    [Parameter(Mandatory = $false, HelpMessage = "Number of days the certificate is valid. Default is 90 days.")]
+    [int]$CertValidityDays = 90,
 
     [Parameter(Mandatory = $true, HelpMessage = "The directory where the script is writing to.")]
     [string]$scriptDirectory
@@ -54,8 +54,7 @@ function New-SharepointOnlineSelfSignedCert {
     $base64CerPath = Join-Path -Path $scriptDirectory -ChildPath "$baseFileName.b64cer"
 
     # Define certificate validity period in days
-    $validityDays = $CertValidityYears * 365
-
+    $validityDays = $CertValidityDays 
     Write-Verbose "Generating Private Key at: $privateKeyPath"
 
     # Generate Private Key
@@ -138,6 +137,6 @@ function New-Cert() {
     New-Item -Path $certDir -ItemType Directory | Out-Null
   }
   # Execute the function with the desired SubjectName and validity period
-  New-SharepointOnlineSelfSignedCert -SubjectName $SubjectName -CertValidityYears 1 -scriptDirectory $certDir -BaseFileName $BaseFileName
+  New-SharepointOnlineSelfSignedCert -SubjectName $SubjectName -CertValidityDays 90 -scriptDirectory $certDir -BaseFileName $BaseFileName
   $env:CERTDIR = $certDir
 }
