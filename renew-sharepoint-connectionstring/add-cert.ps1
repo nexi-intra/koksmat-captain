@@ -1,6 +1,6 @@
 param (
-  [string] $ApplicationId = "d7e7315a-17fc-444e-bb8b-c299a5f66fc5",
-  [string] $Subject = "cn=exchange",
+  [string] $ApplicationId,
+  [string] $Subject,
   [string] $certBase64  
 )
 
@@ -23,5 +23,5 @@ if ($found) {
   return
 }
 
-az ad app credential reset --id $ApplicationId --cert certBase64 --append
+az ad app credential reset --id $ApplicationId --cert $certBase64 --append
 # $appInfo.keyCredentials

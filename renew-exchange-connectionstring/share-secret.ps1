@@ -9,7 +9,7 @@ $root = [System.IO.Path]::GetFullPath(( join-path $PSScriptRoot ..))
 $uploadedFile = GraphAPI `
   -token $env:GRAPH_ACCESSTOKEN `
   -method "PUT" `
-  -url "https://graph.microsoft.com/v1.0/users/$env:SENDER_UPN/drive/root:/koksmat/secrets/apps/$env:GRAPH_APPDOMAIN/$env:TARGET_APPID/pfxfile.txt:/content" `
+  -url "https://graph.microsoft.com/v1.0/users/$env:SENDER_UPN/drive/root:/koksmat/apps/azure/$env:GRAPH_APPDOMAIN/$env:TARGET_APPID/exchange-connection.txt:/content" `
   -headers @{
   "Content-Type" = "text/plain"
 } `

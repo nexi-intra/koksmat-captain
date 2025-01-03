@@ -1,5 +1,5 @@
 <#---
-title: Add a certificate to an application and share the secret with the owner
+title: Renew Exchange Connection String
 ---
 ## Add a certificate to an application and share the secret with the owner
 
@@ -39,7 +39,7 @@ try {
   <#
 ### Share the secret with the owner
 #>
-  . "$PSScriptRoot/share-secret.ps1" -pfxBase64 $pfx 
+  . "$PSScriptRoot/share-secret.ps1" -secret $pfx 
 
 }
 catch {
