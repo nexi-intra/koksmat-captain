@@ -3,6 +3,10 @@ title: Setup Koksmat Captain
 status: draft
 ---
 
+Koksmat requires a certificate to be able to authenticate with the other applications. 
+
+The purpose of this script is to generate a certificate, add it to the application, and share the secret with the owner.
+
 #>
 $root = [System.IO.Path]::GetFullPath(( join-path $PSScriptRoot ..)) 
 
