@@ -1,4 +1,9 @@
+<#---
+title: Provision SharePoint site for Koksmat
+---
 
+
+#>
 $root = [System.IO.Path]::GetFullPath(( join-path $PSScriptRoot ..)) 
 
 write-host "Root: $root"

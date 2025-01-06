@@ -1,10 +1,10 @@
 <#---
-title: Renew Sharepoint Connection String
+title: Renew Service Principal Connection String
 ---
 ## Add a certificate to an application and share the secret with the owner
 
-End result is that a text file containing the environment variables needed to connect to 
-Sharepoint Online is created and shared with the owner using the owners OneDrive.
+End result is that a text file containing the environment variables needed to connect a 
+Service Principal is created and shared with the owner using the owners OneDrive.
 
 The owners gets an email notifying them that connection information has been shared with them.
 
