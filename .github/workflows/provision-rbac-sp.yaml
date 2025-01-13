@@ -1,0 +1,39 @@
+name: Provision RBAC SPN
+
+on:
+  workflow_dispatch:
+    inputs:
+   
+      SPN_NAME:
+        description: "SPN (Service Principal Name)"
+        required: true
+        default: ""
+
+      OWNER_UPN:
+        description: "Owner UPN of the SPN"
+        required: true
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    env:
+      # Define environment variables here
+      WORKDIR: ${{ github.workspace }}
+      TARGET_APPNAME: ${{github.event.inputs.SPN_NAME }}
+      
+      OWNERUPN: ${{github.event.inputs.OWNER_UPN }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.SPN_APP_MANAGEMENT }}
+          allow-no-subscriptions: true
+           
+
+      - name: Update Metadata
+        run: pwsh ./renew-exchange-connectionstring/run.ps1
+        shell: pwsh

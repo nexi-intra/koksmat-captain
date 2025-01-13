@@ -1,0 +1,23 @@
+name: Integration Test
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  '0 */3 * * *'
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check AZ_SPN_APP_MANAGEMENT
+        uses: actions/checkout@v3
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZ_SPN_APP_MANAGEMENT }}
+          allow-no-subscriptions: true
+      - run: |
+          az account show --output none  
+           
+
