@@ -27,7 +27,11 @@ jobs:
       SPN_NAME: ${{github.event.inputs.SPN_NAME }}
       ROLE_NAME: ${{github.event.inputs.ROLE_NAME }}
       OWNER_UPN: ${{github.event.inputs.OWNER_UPN }}
-
+      GRAPH_APPID: ${{vars.GRAPH_APPID }}
+      GRAPH_APPSECRET:  ${{secrets.GRAPH_APPSECRET }}
+      GRAPH_APPDOMAIN: ${{vars.GRAPH_APPDOMAIN }}
+      
+  
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
