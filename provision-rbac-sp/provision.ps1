@@ -1,5 +1,5 @@
-$appName = "$($env:TARGET_APPNAME) [$($env:OWNER_UPN)]"
-$roleName = $env:ROLENAME
+$appName = "$($env:SPN_NAME) [$($env:OWNER_UPN)]"
+$roleName = $env:ROLE_NAME
 write-host "Creating service principal for $appName and role $roleName"
 
 $spLines = az ad sp create-for-rbac --name  $appName --skip-assignment
@@ -9,8 +9,6 @@ $sp = convertfrom-json -InputObject $spJSON
 
 $roleJSON = az rest --method GET --url "https://graph.microsoft.com/v1.0/directoryRoles" --query "value[?displayName=='$($roleName)']" 
 $role = $roleJSON | convertfrom-json
-
-
 
 $spnId = az ad sp list --display-name $appName | convertfrom-json
 

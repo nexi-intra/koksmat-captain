@@ -9,6 +9,11 @@ on:
         required: true
         default: ""
 
+      ROLE_NAME: 
+        description: "Role Name"
+        required: true
+        default: ""
+
       OWNER_UPN:
         description: "Owner UPN of the SPN"
         required: true
@@ -19,9 +24,9 @@ jobs:
     env:
       # Define environment variables here
       WORKDIR: ${{ github.workspace }}
-      TARGET_APPNAME: ${{github.event.inputs.SPN_NAME }}
-      
-      OWNERUPN: ${{github.event.inputs.OWNER_UPN }}
+      SPN_NAME: ${{github.event.inputs.SPN_NAME }}
+      ROLE_NAME: ${{github.event.inputs.ROLE_NAME }}
+      OWNER_UPN: ${{github.event.inputs.OWNER_UPN }}
 
     steps:
       - name: Check out repository
@@ -34,6 +39,6 @@ jobs:
           allow-no-subscriptions: true
            
 
-      - name: Update Metadata
-        run: pwsh ./renew-exchange-connectionstring/run.ps1
+      - name: Run PowerShell
+        run: pwsh ./provision-rbac-sp/run.ps1
         shell: pwsh
