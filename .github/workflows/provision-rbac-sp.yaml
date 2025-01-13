@@ -35,7 +35,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v2
         with:
-          creds: ${{ secrets.SPN_APP_MANAGEMENT }}
+          creds: ${{ secrets.AZ_SPN_APP_MANAGEMENT }}
           allow-no-subscriptions: true
            
 
