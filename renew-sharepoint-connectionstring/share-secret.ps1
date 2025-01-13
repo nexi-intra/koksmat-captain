@@ -13,7 +13,7 @@ $appInfo = az ad app show --id $env:TARGET_APPID --output json | ConvertFrom-Jso
 $uploadedFile = GraphAPI `
   -token $env:GRAPH_ACCESSTOKEN `
   -method "PUT" `
-  -url "https://graph.microsoft.com/v1.0/users/$env:SENDER_UPN/drive/root:/koksmat/apps/azure/$env:GRAPH_APPDOMAIN/$env:TARGET_APPID/sharepoint-connection.txt:/content" `
+  -url "https://graph.microsoft.com/v1.0/users/$env:OWNER_UPN/drive/root:/koksmat/apps/azure/$env:GRAPH_APPDOMAIN/$env:TARGET_APPID/sharepoint-connection.txt:/content" `
   -headers @{
   "Content-Type" = "text/plain"
 } `

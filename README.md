@@ -1,4 +1,5 @@
 ---
+title: Captain
 status: Idea
 ---
 

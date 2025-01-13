@@ -132,10 +132,10 @@ function New-Cert() {
     [string]$BaseFileName
 
   )
-  $certDir = join-path (SetKoksmatWorkdir) "certs"
+  $certDir = join-path (Set-KoksmatWorkdir) "certs"
   if (-not (Test-Path $certDir)) {
     New-Item -Path $certDir -ItemType Directory | Out-Null
-  }
+  } 
   # Execute the function with the desired SubjectName and validity period
   New-SharepointOnlineSelfSignedCert -SubjectName $SubjectName -CertValidityDays 90 -scriptDirectory $certDir -BaseFileName $BaseFileName
   $env:CERTDIR = $certDir

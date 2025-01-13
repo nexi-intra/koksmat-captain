@@ -132,7 +132,7 @@ function New-Cert() {
     [string]$BaseFileName
 
   )
-  $certDir = join-path (SetKoksmatWorkdir) "certs"
+  $certDir = join-path (Set-KoksmatWorkdir) "certs"
   if (-not (Test-Path $certDir)) {
     New-Item -Path $certDir -ItemType Directory | Out-Null
   }

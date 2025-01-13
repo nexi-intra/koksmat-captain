@@ -9,6 +9,15 @@ function List($listName) {
   }
   
 }
+function DocumentLibrary($listName) {
+  $repoList = Get-PnPList -Identity $listName -ErrorAction SilentlyContinue
+  write-host "Checking list $listName" -ForegroundColor Green
+  if ($null -eq $repoList) {
+    write-host "Creating list $listName" -ForegroundColor Yellow
+    $repoList = New-PnPList -Title "$listName" -Template DocumentLibrary -OnQuickLaunch
+  }
+  
+}
 
 function TextField($listName, $fieldName, $displayName, $required) {
   $field = Get-PnPField -List $listName -Identity $fieldName -ErrorAction SilentlyContinue
@@ -38,32 +47,20 @@ function CalculatedField($listName, $fieldName, $displayName, $formula) {
   }
 }
 
-List "Repositories"
-TextField "Repositories" "RepositoryName" "Repository Name"  $true
-TextField "Repositories" "OrganisationName" "Organisation Name"  $true
-ChoiceField "Repositories" "RepositoryType" "Repository Type"  @("Public", "Private")
-TextField "Repositories" "DocRepositoryName" "Documenation Repository Name"  $false
-TextField "Repositories" "DocOrganisationName" "Documenation Organisation Name"  $false
-ChoiceField "Repositories" "DocumentationType" "Documentation Type"  @("Main branch", "All branches", "None")
-CalculatedField "Repositories" "GitHub" "GitHub"  @"
-=CONCATENATE("https://github.com","/",[Organisation Name],"/",[Repository Name])
-"@
-
-
-$json = @'
-{
-  "$schema": "https://developer.microsoft.com/json-schemas/sp/column-formatting.schema.json",
-  "elmType": "a",
-  "attributes": {
-    "href": "@currentField",
-    "target": "_blank"
-  },
-  "txtContent": "@currentField",
-  "style": {
-    "color": "#0072C6",
-    "text-decoration": "underline"
+function UserField($listName, $fieldName, $displayName, $required) {
+  $field = Get-PnPField -List $listName -Identity $fieldName -ErrorAction SilentlyContinue
+  if ($null -eq $field) {
+    write-host "Creating field $fieldName" -ForegroundColor Yellow
+    $field = Add-PnPField -List $listName -Type User -InternalName $fieldName -DisplayName $displayName -AddToDefaultView -Required:$required
   }
 }
-'@
+function AddTemplate($libraryName, $fileName) {
+  # Upload the template to the Forms folder
+  Write-Host "Uploading the template..." -ForegroundColor Green
+  Add-PnPFile -Path $templatePath -Folder "$libraryName/Forms"
 
-Set-PnPField -List "Repositories" -Identity "GitHub" -Values @{ CustomFormatter = $json }
+  # Set the uploaded file as the default template
+  Write-Host "Setting the default template..." -ForegroundColor Green
+  Set-PnPList -Identity $libraryName -DocumentTemplate "Forms/YourTemplate.dotx"
+
+}

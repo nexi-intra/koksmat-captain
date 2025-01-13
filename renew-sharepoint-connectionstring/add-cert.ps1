@@ -31,6 +31,11 @@ if ($found) {
   write-host "Cert already exists with hash $hashString" -ForegroundColor Yellow
   return
 }
+<#
+The az ad app credential reset command will add a new certificate to the application.
 
+It requires az to be logged in with a role that has the necessary permissions to update the application.
+
+#>
 az ad app credential reset --id $ApplicationId --cert $certBase64 --append
 # $appInfo.keyCredentials
