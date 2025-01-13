@@ -18,6 +18,6 @@ jobs:
           creds: ${{ secrets.AZ_SPN_APP_MANAGEMENT }}
           allow-no-subscriptions: true
       - run: |
-          az account show --output none  
+          az account show 
            
 

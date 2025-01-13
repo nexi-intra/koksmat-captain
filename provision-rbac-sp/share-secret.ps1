@@ -9,6 +9,15 @@ $root = [System.IO.Path]::GetFullPath(( join-path $PSScriptRoot ..))
 $appInfo = az ad app show --id $env:TARGET_APPID --output json | ConvertFrom-Json
 
 $credential = Convertfrom-json $env:SPN_CREDS
+$creds = @{
+  "clientSecret"   = $credential.password
+  "clientId"       = $credential.appId
+  "tenantId"       = $credential.tenant
+  "subscriptionId" = $credential.subscriptionId
+
+}
+
+$json = $creds | ConvertTo-Json
 
 $uploadedFile = GraphAPI `
   -token $env:GRAPH_ACCESSTOKEN `
@@ -20,7 +29,7 @@ $uploadedFile = GraphAPI `
   -body @"
 # This is JSON representation of the credentials
 CREDENTIAL="
-$($env:SPN_CREDS)
+$($json)
 "
 
 "@
