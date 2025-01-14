@@ -20,7 +20,7 @@ jobs:
       - run: |
           az account show 
       - name: Run PowerShell
-        run: pwsh ./provision-rbac-sp/run.ps1
+        run: pwsh ./integration-test/run.ps1
         shell: pwsh
              
 
