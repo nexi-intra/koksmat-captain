@@ -30,7 +30,7 @@ jobs:
       GRAPH_APPID: ${{vars.GRAPH_APPID }}
       GRAPH_APPSECRET:  ${{secrets.GRAPH_APPSECRET }}
       GRAPH_APPDOMAIN: ${{vars.GRAPH_APPDOMAIN }}
-      
+      SENDER_UPN: ${{vars.SENDER_UPN }}
   
     steps:
       - name: Check out repository

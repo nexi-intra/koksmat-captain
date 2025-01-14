@@ -19,5 +19,8 @@ jobs:
           allow-no-subscriptions: true
       - run: |
           az account show 
-           
+      - name: Run PowerShell
+        run: pwsh ./provision-rbac-sp/run.ps1
+        shell: pwsh
+             
 
