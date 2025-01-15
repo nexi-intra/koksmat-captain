@@ -26,6 +26,13 @@ function TextField($listName, $fieldName, $displayName, $required) {
     $field = Add-PnPField -List $listName -Type Text -InternalName $fieldName -DisplayName $displayName  -AddToDefaultView -Required:$required
   }
 }
+function MultiLineTextField($listName, $fieldName, $displayName, $required) {
+  $field = Get-PnPField -List $listName -Identity $fieldName -ErrorAction SilentlyContinue
+  if ($null -eq $field) {
+    write-host "Creating field $fieldName" -ForegroundColor Yellow
+    $field = Add-PnPField -List $listName -Type Note  -InternalName $fieldName -DisplayName $displayName  -AddToDefaultView -Required:$required
+  }
+}
 
 function ChoiceField($listName, $fieldName, $displayName, $choices) {
   $field = Get-PnPField -List $listName -Identity $fieldName -ErrorAction SilentlyContinue
