@@ -1,3 +1,7 @@
+<#---
+title: Share secret with service principal
+
+---#>
 param (
   $secret = "This is a secret"
 )
@@ -19,10 +23,12 @@ $creds = @{
 
 $json = $creds | ConvertTo-Json
 
+$account = az account show --output json | ConvertFrom-Json
+
 $uploadedFile = GraphAPI `
   -token $env:GRAPH_ACCESSTOKEN `
   -method "PUT" `
-  -url "https://graph.microsoft.com/v1.0/users/$env:OWNER_UPN/drive/root:/koksmat/apps/azure/$env:GRAPH_APPDOMAIN/$($credential.displayName)/credentials.txt:/content" `
+  -url "https://graph.microsoft.com/v1.0/users/$env:OWNER_UPN/drive/root:/koksmat/apps/azure/$($account.tenantDefaultDomain)/$($credential.displayName)/credentials.txt:/content" `
   -headers @{
   "Content-Type" = "text/plain"
 } `

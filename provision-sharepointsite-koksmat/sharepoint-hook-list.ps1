@@ -13,7 +13,7 @@ $json = @'
   "txtContent": "[$UniqueId]"
 }
 
-'@
+'@  
 
 
 # Set-PnPField -List $listname -Identity "Execute" -Values @{ CustomFormatter = $json }
